@@ -67,7 +67,7 @@ velib = left_join(info_df, status_df, by="data.stations.stationCode")
 pal <- colorFactor (c("#FF0000FF", "#FFFF00FF", "#00FF00FF", "#00FFFFFF", "#0000FFFF", "#FF00FFFF"), domain = velib$data.stations.capacity)
 
 popup_info = paste(velib$data.stations.name, "<br/>", "Capacité maximale de la station : ", velib$data.stations.capacity, "<br/>", "Vélos disponibles : ", velib$data.stations.num_bikes_available) 
-
+ 
 leaflet()%>%addTiles()
 leaflet()%>%addTiles()%>%addMarkers(data=velib, lat = ~data.stations.lat, lng = ~data.stations.lon, popup = ~popup_info, clusterOptions = markerClusterOptions(iconCreateFunction =
                                       JS("
