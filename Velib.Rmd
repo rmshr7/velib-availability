@@ -4,33 +4,6 @@ output: html_document
 ---
 
 ```{r}
-install.packages("httr")
-library(httr)
-require(httr)
-install.packages("jsonlite")
-library(jsonlite)
-require(jsonlite)
-
-
-url <- "https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&q=&facet=name&facet=is_installed&facet=is_renting&facet=is_returning&facet=nom_arrondissement_communes"
-velib <- GET(url, verbose())
-velib$status_code
-http_status(velib)
-
-headers(velib)
-
-velib$content
-
-velib_parse <- content(velib, "parse")
-velib_text <- content(velib, "text")
-velib_json <- fromJSON(velib_text, flatten = TRUE)
-velib_df <- as.data.frame(velib_json$records)
-View(velib_df)
-
-
-```
-
-```{r}
 library(httr)
 require(httr)
 library(jsonlite)
@@ -38,17 +11,14 @@ require(jsonlite)
 
 
 urlStatus <- "https://velib-metropole-opendata.smoove.pro/opendata/Velib_Metropole/station_status.json"
-
 urlInformations <- "https://velib-metropole-opendata.smoove.pro/opendata/Velib_Metropole/station_information.json"
 
 status <- GET(urlStatus, verbose())
-status_parse <- content(status, "parse")
 status_text <- content(status, "text")
 status_json <- fromJSON(status_text, flatten = TRUE)
 status_df <- as.data.frame(status_json)
 
 info <- GET(urlInformations, verbose())
-info_parse <- content(info, "parse")
 info_text <- content(info, "text")
 info_json <- fromJSON(info_text, flatten = TRUE)
 info_df <- as.data.frame(info_json)
