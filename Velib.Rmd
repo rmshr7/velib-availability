@@ -75,7 +75,7 @@ leaflet()%>%addTiles()%>%addMarkers(data=velib, lat = ~data.stations.lat, lng = 
                                              return new L.DivIcon({
                                                html: '<div style=\"background-color:rgba(0,147,255,1)\"><span>' + cluster.getChildCount() + '</div><span>',
                                                className: 'marker-cluster'
-                                             });
+                                             }); 
                                            }")))
 
 ```
