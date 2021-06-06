@@ -8,7 +8,8 @@ library(httr)
 require(httr)
 library(jsonlite)
 require(jsonlite)
-
+library(leaflet)
+library(dplyr)
 
 urlStatus <- "https://velib-metropole-opendata.smoove.pro/opendata/Velib_Metropole/station_status.json"
 urlInformations <- "https://velib-metropole-opendata.smoove.pro/opendata/Velib_Metropole/station_information.json"
@@ -31,21 +32,17 @@ View(info_df)
 Paris area's velib stations cartography :
 
 ```{r echo=FALSE}
-library(leaflet)
-library(dplyr)
-
 velib = left_join(info_df, status_df, by="data.stations.stationCode")
 
 pal <- colorFactor (c("#FF0000FF", "#FFFF00FF", "#00FF00FF", "#00FFFFFF", "#0000FFFF", "#FF00FFFF"), domain = velib$data.stations.capacity)
 
-popup_info = paste(velib$data.stations.name, "<br/>", "Capacité maximale de la station : ", velib$data.stations.capacity, "<br/>", "Vélos disponibles : ", velib$data.stations.num_bikes_available) 
- 
-leaflet()%>%addTiles()
+popup_info = paste(velib$data.stations.name, "<br/>", "Capacité maximale de la station : ", velib$data.stations.capacity, "<br/>", "Vélos disponibles actuellement : ", velib$data.stations.num_bikes_available) 
+
 leaflet()%>%addTiles()%>%addMarkers(data=velib, lat = ~data.stations.lat, lng = ~data.stations.lon, popup = ~popup_info, clusterOptions = markerClusterOptions(iconCreateFunction =
                                       JS("
                                           function(cluster) {
                                              return new L.DivIcon({
-                                               html: '<div style=\"background-color:rgba(0,147,255,1)\"><span>' + cluster.getChildCount() + '</div><span>',
+                                               html: '<div style=\"color:white; background-color:rgba(0,147,255,1)\"><span>' + cluster.getChildCount() + '</div><span>',
                                                className: 'marker-cluster'
                                              }); 
                                            }")))
