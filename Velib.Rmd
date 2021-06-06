@@ -3,7 +3,7 @@ title: "Velib availability"
 output: html_document
 ---
 
-```{r}
+```{r include=FALSE}
 library(httr)
 require(httr)
 library(jsonlite)
@@ -28,7 +28,9 @@ View(info_df)
 
 ```
 
-```{r}
+Paris area's velib stations cartography :
+
+```{r echo=FALSE}
 library(leaflet)
 library(dplyr)
 
