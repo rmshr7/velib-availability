@@ -47,6 +47,17 @@ leaflet()%>%addTiles()%>%addMarkers(data=velib, lat = ~data.stations.lat, lng = 
                                              }); 
                                            }")))
 
+
+```
+Rayan
+```{r}
+x <- 2
+x
+
 ```
 
+Abdel
+```{r}
+
+```
 
