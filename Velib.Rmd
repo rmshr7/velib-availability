@@ -1,5 +1,5 @@
 ---
-title: "Velib availability"
+title: ![velib logo](Vélib-Métropole-Logo) "Velib availability"
 output: html_document
 ---
 
@@ -49,21 +49,72 @@ leaflet()%>%addTiles()%>%addMarkers(data=velib, lat = ~data.stations.lat, lng = 
 
 
 ```
+
 Rayan
 ```{r}
-x <- 2
-x
+velib = left_join(info_df, status_df, by="data.stations.stationCode")
+
+pal <- colorFactor (c("#FF0000FF", "#FFFF00FF", "#00FF00FF", "#00FFFFFF", "#0000FFFF", "#FF00FFFF"), domain = velib$data.stations.capacity)
+
+popup_info = paste(velib$data.stations.name, "<br/>", "Capacité maximale de la station : ", velib$data.stations.capacity, "<br/>", "Vélos disponibles actuellement : ", velib$data.stations.num_bikes_available) 
+
+leaflet()%>%addTiles()%>%addWMSTiles("http://c.tile.stamen.com/watercolor/${z}/${x}/${y}.png")
+leaflet()%>%addProviderTiles(providers$Stamen.Toner)%>%addMarkers(data=velib, lat = ~data.stations.lat, lng = ~data.stations.lon, popup = ~popup_info, clusterOptions = markerClusterOptions(iconCreateFunction =
+                                      JS("
+                                          function(cluster) {
+                                             return new L.DivIcon({
+                                               html: '<div style=\"color:white; background-color:rgba(0,147,255,1)\"><span>' + cluster.getChildCount() + '</div><span>',
+                                               className: 'marker-cluster'
+                                             }); 
+                                           }")))
+leaflet()%>%addProviderTiles(providers$CartoDB.Positron)%>%addMarkers(data=velib, lat = ~data.stations.lat, lng = ~data.stations.lon, popup = ~popup_info, clusterOptions = markerClusterOptions(iconCreateFunction =
+                                      JS("
+                                          function(cluster) {
+                                             return new L.DivIcon({
+                                               html: '<div style=\"color:white; background-color:rgba(0,147,255,1)\"><span>' + cluster.getChildCount() + '</div><span>',
+                                               className: 'marker-cluster'
+                                             }); 
+                                           }")))
+leaflet()%>%addProviderTiles(providers$Esri.NatGeoWorldMap)%>%addMarkers(data=velib, lat = ~data.stations.lat, lng = ~data.stations.lon, popup = ~popup_info, clusterOptions = markerClusterOptions(iconCreateFunction =
+                                      JS("
+                                          function(cluster) {
+                                             return new L.DivIcon({
+                                               html: '<div style=\"color:white; background-color:rgba(0,147,255,1)\"><span>' + cluster.getChildCount() + '</div><span>',
+                                               className: 'marker-cluster'
+                                             }); 
+                                           }")))
+leaflet()%>%addProviderTiles(providers$MtbMap) %>%
+  addProviderTiles(providers$Stamen.TonerLines,
+    options = providerTileOptions(opacity = 0.35)) %>%
+  addProviderTiles(providers$Stamen.TonerLabels)%>%addMarkers(data=velib, lat = ~data.stations.lat, lng = ~data.stations.lon, popup = ~popup_info, clusterOptions = markerClusterOptions(iconCreateFunction =
+                                      JS("
+                                          function(cluster) {
+                                             return new L.DivIcon({
+                                               html: '<div style=\"color:white; background-color:rgba(0,147,255,1)\"><span>' + cluster.getChildCount() + '</div><span>',
+                                               className: 'marker-cluster'
+                                             }); 
+                                           }")))
+
+
+leaflet()%>%addTiles()%>%addMarkers(data=velib, lat = ~data.stations.lat, lng = ~data.stations.lon, popup = ~popup_info, clusterOptions = markerClusterOptions(iconCreateFunction =
+                                      JS("
+                                          function(cluster) {
+                                             return new L.DivIcon({
+                                               html: '<div style=\"color:white; background-color:rgba(0,147,255,1)\"><span>' + cluster.getChildCount() + '</div><span>',
+                                               className: 'marker-cluster'
+                                             }); 
+                                           }")))
+
 
 ```
 
 Abdel
 ```{r}
-x <- 3
-x <- 4
+
 
 ```
 
-<<<<<<< HEAD
+
 Karine
 ```{r}
 
@@ -73,15 +124,10 @@ Mohamed
 ```{r}
 
 ```
-=======
-Mohamed 
->>>>>>> 18d16f1524c34bbf77a8878078657983d294cf45
+
 
 Mathieu
 ```{r}
 
 ```
-<<<<<<< HEAD
 
-=======
->>>>>>> 18d16f1524c34bbf77a8878078657983d294cf45
