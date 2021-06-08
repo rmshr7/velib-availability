@@ -1,0 +1,21 @@
+/* Code CSS */
+
+body {
+  font-family: Verdana, sans-serif;
+}
+
+
+h1 {
+  position: relative;
+}
+
+.title {
+  position: relative;
+
+  
+}
+.img {
+  position: absolute;
+  top: 1%;
+  right: 1%;
+}

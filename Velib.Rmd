@@ -1,6 +1,8 @@
 ---
-title: ![velib logo](Vélib-Métropole-Logo) "Velib availability"
-output: html_document
+title: "Velib availability"
+output: 
+  html_document: 
+    css: "style.css"
 ---
 
 ```{r include=FALSE}
@@ -24,20 +26,19 @@ info_text <- content(info, "text")
 info_json <- fromJSON(info_text, flatten = TRUE)
 info_df <- as.data.frame(info_json)
 
-View(status_df)
-View(info_df)
-
-```
-
-Paris area's velib stations cartography :
-
-```{r echo=FALSE}
 velib = left_join(info_df, status_df, by="data.stations.stationCode")
+totalVelibAvailable <- sum(velib$data.stations.num_bikes_available) / sum(velib$data.stations.capacity) * 100
+totalDocksAvailable <- sum(velib$data.stations.num_docks_available) / sum(velib$data.stations.capacity) * 100
 
 pal <- colorFactor (c("#FF0000FF", "#FFFF00FF", "#00FF00FF", "#00FFFFFF", "#0000FFFF", "#FF00FFFF"), domain = velib$data.stations.capacity)
 
 popup_info = paste(velib$data.stations.name, "<br/>", "Capacité maximale de la station : ", velib$data.stations.capacity, "<br/>", "Vélos disponibles actuellement : ", velib$data.stations.num_bikes_available) 
+```
 
+![velib-logo](Velib-Metropole-Logo.png){#id .img width=193px height=118.8px}
+<h1> Paris area's velib stations cartography : </h1>
+
+```{r echo=FALSE}
 leaflet()%>%addTiles()%>%addMarkers(data=velib, lat = ~data.stations.lat, lng = ~data.stations.lon, popup = ~popup_info, clusterOptions = markerClusterOptions(iconCreateFunction =
                                       JS("
                                           function(cluster) {
@@ -50,15 +51,9 @@ leaflet()%>%addTiles()%>%addMarkers(data=velib, lat = ~data.stations.lat, lng = 
 
 ```
 
-Rayan
-```{r}
-velib = left_join(info_df, status_df, by="data.stations.stationCode")
-
-pal <- colorFactor (c("#FF0000FF", "#FFFF00FF", "#00FF00FF", "#00FFFFFF", "#0000FFFF", "#FF00FFFF"), domain = velib$data.stations.capacity)
-
-popup_info = paste(velib$data.stations.name, "<br/>", "Capacité maximale de la station : ", velib$data.stations.capacity, "<br/>", "Vélos disponibles actuellement : ", velib$data.stations.num_bikes_available) 
-
-leaflet()%>%addTiles()%>%addWMSTiles("http://c.tile.stamen.com/watercolor/${z}/${x}/${y}.png")
+<h2> Rayan </h2>
+Autres templates de map possibles :
+```{r echo=FALSE}
 leaflet()%>%addProviderTiles(providers$Stamen.Toner)%>%addMarkers(data=velib, lat = ~data.stations.lat, lng = ~data.stations.lon, popup = ~popup_info, clusterOptions = markerClusterOptions(iconCreateFunction =
                                       JS("
                                           function(cluster) {
@@ -108,25 +103,28 @@ leaflet()%>%addTiles()%>%addMarkers(data=velib, lat = ~data.stations.lat, lng = 
 
 ```
 
-Abdel
+
+`r totalVelibAvailable`
+
+<h2> Abdel </h2>
 ```{r}
 
 
 ```
 
 
-Karine
+<h2> Karine </h2>
 ```{r}
 
 ```
 
-Mohamed
+<h2> Mohamed </h2>
 ```{r}
 
 ```
 
 
-Mathieu
+<h2> Mathieu </h2>
 ```{r}
 
 ```
